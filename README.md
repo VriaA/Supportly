@@ -13,13 +13,12 @@
 Create a `.env.local` file with a variable called `OPENAI_API_KEY` in the root directory as follows:
 
     OPENAI_API_KEY=key
-    
-### Note: 
+##### Note: 
 - No need to prefix with `"NEXT_PUBLIC"` since it will be used on the server.
 
-### How to get OpenAI Api Key:
+##### How to get OpenAI Api Key:
 
-- On the OpenAI API website, login to your account, then navigate to /api-keys to generate your Personal Api Key.
+- On the OpenAI API website, login to your account, then navigate to /api-keys to generate your personal API Key.
 
 
 
