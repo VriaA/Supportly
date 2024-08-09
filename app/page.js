@@ -121,7 +121,7 @@ export default function Home() {
 
           {/* New Section with Logo and "Ask a Question" */}
           <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, mt: 4, mb: 4 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, mt: 4, mb: 8 }}>
               <img src="/images/Icon.png" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
               <Typography variant="h4">SUPPORTLY</Typography>
             </Box>
