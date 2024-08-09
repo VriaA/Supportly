@@ -1,5 +1,10 @@
-import styles from "./page.module.css";
+import { Container } from "@mui/material";
+import Messages from "@/components/Messages";
 
 export default function Home() {
-  return <main className={styles.main}></main>;
+  return (
+    <Container>
+      <Messages />
+    </Container>
+  );
 }
