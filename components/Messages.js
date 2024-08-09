@@ -9,7 +9,7 @@ export default function Messages() {
     <Stack
       direction={"column"}
       width="500px"
-      height="70svh"
+      height="55svh"
       p={2}
       spacing={3}
     >
