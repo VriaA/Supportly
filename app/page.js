@@ -121,12 +121,9 @@ export default function Home() {
 
           {/* New Section with Logo and "Ask a Question" */}
           <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <img src="/images/Icon.png" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
-            <Typography variant="h4" sx={{ mt: 1 }}>SUPPORTLY</Typography>
-            <Box sx={{ mt: 3 }}>
-              <HelpOutlineIcon sx={{ fontSize: 50, color: "#FF69B4" }} /> {/* Example color */}
-              <Typography variant="h6" sx={{ mt: 1 }}>Ask a Question</Typography>
-              <Typography variant="body1">Have a question? Ask here for instant answers</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2}}>
+              <img src="/images/Icon.png" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
+              <Typography variant="h4">SUPPORTLY</Typography>
             </Box>
           </Box>
 
