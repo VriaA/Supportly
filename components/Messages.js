@@ -9,7 +9,7 @@ export default function Messages() {
     <Stack
       direction={"column"}
       width="500px"
-      height="100svh"
+      height="85svh"
       p={2}
       spacing={3}
     >
@@ -47,23 +47,6 @@ export default function Messages() {
         ))}
       </Stack>
 
-      <Stack
-        direction={"row"}
-        spacing={2}
-      >
-        <TextField
-          label="Message"
-          fullWidth
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          onClick={sendMessage}
-        >
-          Send
-        </Button>
-      </Stack>
     </Stack>
   );
 }
