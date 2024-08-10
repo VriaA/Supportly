@@ -28,7 +28,7 @@ async function fetchResults(query, docs) {
         docs: docs,
         // Add more key-value pairs as needed
     };
-    const response = await fetch(` http://127.0.0.1:5000/sim`, {
+    const response = await fetch(` https://Anushka12.pythonanywhere.com/sim`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
