@@ -1,4 +1,5 @@
 'use client'
+
 import { Container, Box, Drawer, List, ListItem, ListItemText, ListItemIcon, TextField, IconButton, Divider, Button, InputAdornment, Typography } from "@mui/material";
 import Messages from "@/components/Messages";
 import SendIcon from '@mui/icons-material/Send';
@@ -8,16 +9,19 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
+import useMessage from "@/hooks/useMessage"; // Importing the custom hook
 
 export default function Home() {
   const drawerWidth = 240;
   const [message, setMessage] = useState("");
 
+  // Destructure the sendMessage function from the useMessage hook
+  const { sendMessage } = useMessage();
+
   const handleSendMessage = () => {
     if (message.trim()) {
-      console.log("Message sent:", message);
-      setMessage("");  // Clear the text field after sending the message
-      // Add further message sending logic here
+      sendMessage(message); // Use the sendMessage function from the hook
+      setMessage(""); // Clear the text field after sending the message
     }
   };
 
@@ -137,7 +141,7 @@ export default function Home() {
                     <IconButton
                       edge="end"
                       color="primary"
-                      onClick={handleSendMessage}
+                      onClick={handleSendMessage} // Add onClick listener
                       aria-label="Send message"
                     >
                       <SendIcon />
