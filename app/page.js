@@ -61,12 +61,6 @@ export default function Home() {
             <ListItemIcon sx={{ color: "black" }}>
               <DescriptionIcon />
             </ListItemIcon>
-            <ListItemText primary="Updates on Mental Health" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon sx={{ color: "black" }}>
-              <DescriptionIcon />
-            </ListItemIcon>
             <ListItemText primary="New Chat" />
           </ListItem>
         </List>
