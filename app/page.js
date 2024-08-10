@@ -1,18 +1,12 @@
 'use client'
-
 import { Container, Box, Drawer, List, ListItem, ListItemText, ListItemIcon, TextField, IconButton, Divider, Button, InputAdornment, Typography } from "@mui/material";
 import Messages from "@/components/Messages";
 import SendIcon from '@mui/icons-material/Send';
-import MicIcon from '@mui/icons-material/Mic';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ChatIcon from '@mui/icons-material/Chat';
 import DescriptionIcon from '@mui/icons-material/Description';
-import CreateIcon from '@mui/icons-material/Create';
-import ClearAllIcon from '@mui/icons-material/ClearAll';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Example icon for "Ask a Question"
 import { useState } from "react";
 
 export default function Home() {
@@ -68,12 +62,6 @@ export default function Home() {
         <List>
           <ListItem button>
             <ListItemIcon sx={{ color: "black" }}>
-              <ChatIcon />
-            </ListItemIcon>
-            <ListItemText primary="Ask a question" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon sx={{ color: "black" }}>
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="An Essay on Modern Design" />
@@ -91,12 +79,6 @@ export default function Home() {
         {/* Bottom Section */}
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon sx={{ color: "black" }}>
-              <ClearAllIcon />
-            </ListItemIcon>
-            <ListItemText primary="Clear Chats" />
-          </ListItem>
           <ListItem button>
             <ListItemIcon sx={{ color: "black" }}>
               <AccountCircleIcon />
@@ -150,16 +132,6 @@ export default function Home() {
                 },
               }}
               InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <IconButton edge="start" color="primary">
-                      <AttachFileIcon />
-                    </IconButton>
-                    <IconButton edge="start" color="primary">
-                      <MicIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
