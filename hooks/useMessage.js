@@ -21,11 +21,11 @@ export default function useMessage() {
   async function sendMessage() {
     if (!message.trim()) return;
 
-    setMessage("");
+    setMessage(""); // Clear the message after it's sent
     setMessages((messages) => [
       ...messages,
-      { role: "user", content: message },
-      { role: "assistant", content: "" },
+      { role: "user", content: message }, // Add user message
+      { role: "assistant", content: "" }, // Prepare for the assistant's response
     ]);
 
     try {
