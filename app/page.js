@@ -1,4 +1,5 @@
 'use client'
+
 import { Container, Box, Drawer, List, ListItem, ListItemText, ListItemIcon, TextField, IconButton, Divider, Button, InputAdornment, Typography } from "@mui/material";
 import Messages from "@/components/Messages";
 import SendIcon from '@mui/icons-material/Send';
@@ -7,18 +8,14 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
+import { useMessage } from "@/hooks/useMessage"; // Adjust the import path as needed
 
 export default function Home() {
   const drawerWidth = 240;
-  const [message, setMessage] = useState("");
+  const { message, setMessage, sendMessage } = useMessage();
 
   const handleSendMessage = () => {
-    if (message.trim()) {
-      console.log("Message sent:", message);
-      setMessage("");  // Clear the text field after sending the message
-      // Add further message sending logic here
-    }
+    sendMessage(); // This will trigger the sendMessage function from context
   };
 
   return (
@@ -95,12 +92,8 @@ export default function Home() {
       </Drawer>
 
       {/* Main Content */}
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3 }}
-      >
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Container>
-
           {/* New Section with Logo and "Ask a Question" */}
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, mt: 20, mb: 12 }}>
