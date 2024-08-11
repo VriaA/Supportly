@@ -1,68 +1,69 @@
-"use client";
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import useMessage from "@/hooks/useMessage";
-import { Fragment } from "react";
+import { Box, Stack, Typography } from "@mui/material";
+import { MessagesContext } from "@/contexts/MessagesContext";
+import { Fragment, useContext } from "react";
+import Loader from "./Loader";
+
 export default function Messages() {
-  const { setMessage, sendMessage, messages, message } = useMessage();
+  const { messages } = useContext(MessagesContext);
 
   return (
     <Stack
       direction={"column"}
-      width="500px"
-      height="100svh"
-      p={2}
-      spacing={3}
-    >
+      width="100%"
+      padding="0 200px 100px 200px"
+      spacing={2}
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        overflow: "auto",
+      }}>
       <Stack
         direction={"column"}
         spacing={2}
         flexGrow={1}
         overflow="auto"
-        maxHeight="100%"
-      >
-        {messages.map((message, index) => (
-          <Box
-            key={`message-${index + 1}`}
-            display="flex"
-            justifyContent={
-              message.role === "assistant" ? "flex-start" : "flex-end"
-            }
-          >
+        sx={{
+          width: "100%",
+          alignItems: "left",
+        }}>
+        {messages.map((message, index) => {
+          const hasMessage = message.content;
+          return (
             <Box
-              bgcolor={
-                message.role === "assistant" ? "primary.main" : "secondary.main"
+              key={`message-${index + 1}`}
+              display="flex"
+              justifyContent={
+                message.role === "assistant" ? "flex-start" : "flex-end"
               }
-              color="white"
-              borderRadius="16px"
-              padding="8px 16px"
-            >
-              {message.content.split(/\d+\.\s*/).map((sentence, index) => (
-                <Fragment key={`message-${index + 1}`}>
-                  {index !== 0 && <br />}
-                  <Typography>{sentence}</Typography>
-                </Fragment>
-              ))}
-            </Box>
-          </Box>
-        ))}
-      </Stack>
+              sx={{
+                width: "100%",
+                maxWidth: "90%",
+              }}>
+              <Box
+                bgcolor={
+                  message.role === "assistant"
+                    ? "primary.main"
+                    : "secondary.main"
+                }
+                color="white"
+                borderRadius="16px"
+                padding={message.content ? "8px 16px" : "2px"}
+                sx={{
+                  maxWidth: "100%",
+                }}>
+                {hasMessage &&
+                  message.content.split(/\d+\.\s*/).map((sentence, index) => (
+                    <Fragment key={`message-${index + 1}`}>
+                      {index !== 0 && <br />}
+                      <Typography>{sentence}</Typography>
+                    </Fragment>
+                  ))}
 
-      <Stack
-        direction={"row"}
-        spacing={2}
-      >
-        <TextField
-          label="Message"
-          fullWidth
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          onClick={sendMessage}
-        >
-          Send
-        </Button>
+                {!hasMessage && <Loader />}
+              </Box>
+            </Box>
+          );
+        })}
       </Stack>
     </Stack>
   );

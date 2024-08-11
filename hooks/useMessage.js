@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 
 export default function useMessage() {
   const [messages, setMessages] = useState([
@@ -18,14 +20,23 @@ export default function useMessage() {
   ]);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    // SCROLL TO THE BOTTOM WHEN A NEW MESSAGE IS ADDED
+    window.scroll({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [messages]);
+
   async function sendMessage() {
     if (!message.trim()) return;
 
-    setMessage("");
+    setMessage(""); // Clear the message after it's sent
     setMessages((messages) => [
       ...messages,
-      { role: "user", content: message },
-      { role: "assistant", content: "" },
+      { role: "user", content: message }, // Add user message
+      { role: "assistant", content: "" }, // Prepare for the assistant's response
     ]);
 
     try {
