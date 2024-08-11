@@ -29,12 +29,27 @@ export default function useMessage() {
     ]);
 
     try {
+      const rag_response = await fetch("/api/rag", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: message }),
+      });
+
+      if (!rag_response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const { prompt } = await rag_response.json();
+      console.log(prompt);
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify([...messages, { role: "user", content: message }]),
+        body: JSON.stringify([...messages, { role: "user", content: prompt }]),
       });
 
       if (!response.ok) {
