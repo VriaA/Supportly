@@ -1,12 +1,24 @@
 "use client";
-import { Box } from "@mui/material";
 import Messages from "@/components/Messages";
 import { MessagesContextProvider } from "@/contexts/MessagesContext";
 import SearchField from "@/components/SearchField";
 import SideBar from "@/components/SideBar";
 import Header from "@/components/Header";
-
+import Messages from "@/components/Messages"
+import { AppContext } from "@/contexts/AppContext"
+import { Box, Container, Typography, CircularProgress } from "@mui/material"
+import { useContext } from "react"
+  
 export default function Home() {
+  const { signedInUser } = useContext(AppContext)
+
+  if (!signedInUser) {
+    return <div className="fixed h-fit w-fit inset-0 m-auto flex flex-col items-center gap-3">
+      <CircularProgress />
+      <Typography sx={{ fontWeight: 500 }}>Verifying your authentication...</Typography>
+    </div>
+  }
+
   return (
     <Box
       sx={{
