@@ -45,86 +45,48 @@ export default function Home() {
 
   const drawerContent = (
     <>
-      <Box sx={{ p: 2, display: "flex", justifyContent: "center" }}>
-        {isMobile ? (
-          <Tooltip title="New Chat">
-            <IconButton color="primary">
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Button 
-            variant="contained" 
-            color="primary" 
-            fullWidth
-            sx={{ 
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 1,
-            }}
-          >
-            <AddIcon />
-            New Chat
-          </Button>
-        )}
+      <Box sx={{ p: 2, textAlign: "center" }}>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          fullWidth
+          sx={{ 
+            borderRadius: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+          }}
+        >
+          <AddIcon />
+          New Chat
+        </Button>
       </Box>
   
-      <List sx={{ flexGrow: 1 }}>
-        <ListItem button sx={{ display: "flex", justifyContent: "center" }}>
-          {isMobile ? (
-            <Tooltip title="New Chat">
-              <IconButton sx={{ color: "black" }}>
-                <DescriptionIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <>
-              <ListItemIcon sx={{ color: "black" }}>
-                <DescriptionIcon />
-              </ListItemIcon>
-              <ListItemText primary="New Chat" />
-            </>
-          )}
+      <List>
+        <ListItem button>
+          <ListItemIcon sx={{ color: "black" }}>
+            <DescriptionIcon />
+          </ListItemIcon>
+          <ListItemText primary="New Chat" />
         </ListItem>
       </List>
   
+      <Box sx={{ flexGrow: 0.95 }} />
+  
       <Divider />
-  
-      <List sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: 2 }}>
-        <ListItem button sx={{ display: "flex", justifyContent: "center" }}>
-          {isMobile ? (
-            <Tooltip title="Account">
-              <IconButton sx={{ color: "black" }}>
-                <AccountCircleIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <>
-              <ListItemIcon sx={{ color: "black" }}>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Account" />
-            </>
-          )}
+      <List>
+        <ListItem button>
+          <ListItemIcon sx={{ color: "black" }}>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Account" />
         </ListItem>
-  
-        <ListItem button sx={{ display: "flex", justifyContent: "center" }}>
-          {isMobile ? (
-            <Tooltip title="Sign Out">
-              <IconButton sx={{ color: "black" }}>
-                <ExitToAppIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <>
-              <ListItemIcon sx={{ color: "black" }}>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sign Out" />
-            </>
-          )}
+        <ListItem button>
+          <ListItemIcon sx={{ color: "black" }}>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Sign Out" />
         </ListItem>
       </List>
     </>
