@@ -62,39 +62,44 @@ export default function Home() {
           New Chat
         </Button>
       </Box>
-  
+
       <List>
         <ListItem button>
-          <ListItemIcon sx={{ color: "black" }}>
+          <ListItemIcon sx={{ color: "white" }}>
             <DescriptionIcon />
           </ListItemIcon>
-          <ListItemText primary="New Chat" />
+          <ListItemText primary="New Chat" sx={{ color: 'white' }} />
         </ListItem>
       </List>
-  
+
       <Box sx={{ flexGrow: 0.95 }} />
-  
-      <Divider />
+
+      <Divider sx={{ backgroundColor: 'white' }} />
       <List>
         <ListItem button>
-          <ListItemIcon sx={{ color: "black" }}>
+          <ListItemIcon sx={{ color: "white" }}>
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="Account" />
+          <ListItemText primary="Account" sx={{ color: 'white' }} />
         </ListItem>
         <ListItem button>
-          <ListItemIcon sx={{ color: "black" }}>
+          <ListItemIcon sx={{ color: "white" }}>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary="Sign Out" />
+          <ListItemText primary="Sign Out" sx={{ color: 'white' }} />
         </ListItem>
       </List>
     </>
   );
-  
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: isMobile ? 'column' : 'row', 
+      bgcolor: '#1C1C1C', 
+      color: 'white', // Set default text color to white
+      minHeight: '100vh' // Ensure the background covers the whole viewport
+    }}>
       {/* Mobile Menu Button */}
       {isMobile && (
         <IconButton
@@ -121,8 +126,8 @@ export default function Home() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
+            bgcolor: '#1C1C1C',
+            color: 'white', // Set text color inside drawer to white
           },
         }}
       >
@@ -162,9 +167,9 @@ export default function Home() {
                 borderRadius: 1,
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 4.5,
-                  bgcolor: '#F2F3F4',
+                  bgcolor: '#1C1C1C',
                   '& input': {
-                    color: '#1C1C1C',
+                    color: '#F2F3F4',
                   },
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                 },
