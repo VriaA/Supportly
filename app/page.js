@@ -147,7 +147,7 @@ export default function Home() {
               mt: isMobile ? 5 : 20, 
               mb: isMobile ? 8 : 12 
             }}>
-              <img src="/images/logo.jpg" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
+              <img src="/images/logo.png" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
               <Typography variant={isMobile ? "h5" : "h4"}>SUPPORTLY</Typography>
             </Box>
           </Box>
