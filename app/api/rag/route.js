@@ -21,24 +21,24 @@ async function fetchEmbeddings(query) {
     return data.answer;
 }
 
-async function fetchResults(query, docs) {
-    // Make a GET request to your embedding endpoint
-    const requestBody = {
-        query: query,
-        docs: docs,
-        // Add more key-value pairs as needed
-    };
-    const response = await fetch(` https://Anushka12.pythonanywhere.com/sim`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestBody)  // Convert the body object to a JSON string
-    })
-    if (!response.ok) throw new Error("Failed to fetch embeddings");
-    const data = await response.json();
-    return data.answer;
-}
+// async function fetchResults(query, docs) {
+//     // Make a GET request to your embedding endpoint
+//     const requestBody = {
+//         query: query,
+//         docs: docs,
+//         // Add more key-value pairs as needed
+//     };
+//     const response = await fetch(` https://Anushka12.pythonanywhere.com/sim`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(requestBody)  // Convert the body object to a JSON string
+//     })
+//     if (!response.ok) throw new Error("Failed to fetch embeddings");
+//     const data = await response.json();
+//     return data.answer;
+// }
 
 async function fetchDocuments() {
     const response = await fetch(`${endpoint}/find`, {
@@ -59,6 +59,14 @@ async function fetchDocuments() {
     return data.documents;
 }
 
+// Function to calculate cosine similarity
+function cosineSimilarity(v1, v2) {
+    const dotProduct = v1.reduce((sum, a, idx) => sum + a * v2[idx], 0);
+    const normV1 = Math.sqrt(v1.reduce((sum, a) => sum + a * a, 0));
+    const normV2 = Math.sqrt(v2.reduce((sum, a) => sum + a * a, 0));
+    return dotProduct / (normV1 * normV2);
+}
+
 // Handler function for POST requests
 export async function POST(req, res) {
     // Parse the request body (assuming JSON format)
@@ -74,11 +82,26 @@ export async function POST(req, res) {
         // Fetch documents from MongoDB
         const docs = await fetchDocuments();
 
-        const preparedDocs = docs.map(doc => ({
-            embedding: doc.embedding,
-            answer: doc.answer
+        // const preparedDocs = docs.map(doc => ({
+        //     embedding: doc.embedding,
+        //     answer: doc.answer
+        // }));
+        // const context = await fetchResults(queryEmbedding, preparedDocs);
+
+        // Calculate similarity scores
+        const scores = docs.map(doc => ({
+            ...doc,
+            score: cosineSimilarity(queryEmbedding, doc.embedding)
         }));
-        const context = await fetchResults(queryEmbedding, preparedDocs);
+
+        // Sort documents by similarity score in descending order
+        scores.sort((a, b) => b.score - a.score);
+
+        // Get the top 5 results
+        const topResults = scores.slice(0, 5);
+
+        // Combine the answers from the top results
+        const context = topResults.map(result => result.answer).join("\n---\n");
 
         const prompt = `Here are 5 answers you can refer to & answer similarly, if relevant: 
         "${context}". 
