@@ -15,18 +15,24 @@ import {
   InputAdornment,
   Typography,
   useMediaQuery,
-  Tooltip
+  Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from '@mui/icons-material/Menu';
-import Messages from "@/components/Messages";
 import SendIcon from '@mui/icons-material/Send';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
 import { useMessage } from "@/hooks/useMessage"; // Adjust the import path as needed
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { MessagesContextProvider } from "@/contexts/MessagesContext";
+import SearchField from "@/components/SearchField";
+import SideBar from "@/components/SideBar";
+import Header from "@/components/Header";
+import Messages from "@/components/Messages";
+import { AppContext } from "@/contexts/AppContext";
 
 export default function Home() {
   const drawerWidth = 240;
@@ -34,6 +40,8 @@ export default function Home() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Check if the screen size is small
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const { signedInUser } = useContext(AppContext);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -43,14 +51,25 @@ export default function Home() {
     sendMessage(); // This will trigger the sendMessage function from context
   };
 
+  if (!signedInUser) {
+    return (
+      <div className="fixed h-fit w-fit inset-0 m-auto flex flex-col items-center gap-3">
+        <CircularProgress />
+        <Typography sx={{ fontWeight: 500 }}>
+          Verifying your authentication...
+        </Typography>
+      </div>
+    );
+  }
+
   const drawerContent = (
     <>
       <Box sx={{ p: 2, textAlign: "center" }}>
-        <Button 
-          variant="contained" 
-          color="primary" 
+        <Button
+          variant="contained"
+          color="primary"
           fullWidth
-          sx={{ 
+          sx={{
             borderRadius: 2,
             display: 'flex',
             alignItems: 'center',
@@ -93,104 +112,105 @@ export default function Home() {
   );
 
   return (
-    <Box sx={{ 
-      display: 'flex', 
-      flexDirection: isMobile ? 'column' : 'row', 
-      bgcolor: '#1C1C1C', 
+    <Box sx={{
+      display: "flex",
+      minHeight: "100svh",
+      overflow: "hidden",
+      bgcolor: '#1C1C1C',
       color: 'white', // Set default text color to white
-      minHeight: '100vh' // Ensure the background covers the whole viewport
     }}>
-      {/* Mobile Menu Button */}
-      {isMobile && (
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ position: 'absolute', top: 8, left: 12 }}
+      {/* Sidebar Drawer */}
+      {isMobile ? (
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+              bgcolor: '#1C1C1C',
+              color: 'white',
+            },
+          }}
         >
-          <MenuIcon />
-        </IconButton>
+          {drawerContent}
+        </Drawer>
+      ) : (
+        <SideBar />
       )}
 
-      {/* Sidebar Drawer */}
-      <Drawer
-        variant={isMobile ? "temporary" : "permanent"} // Toggle between permanent and temporary drawer
-        open={!isMobile || mobileOpen}
-        onClose={handleDrawerToggle}
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            bgcolor: '#1C1C1C',
-            color: 'white', // Set text color inside drawer to white
-          },
-        }}
-      >
-        {drawerContent}
-      </Drawer>
-
       {/* Main Content */}
-      <Box component="main" sx={{ flexGrow: 1, p: isMobile ? 2 : 3 }}>
-        <Container>
-          {/* New Section with Logo and "Ask a Question" */}
-          <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <Box sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              gap: 2, 
-              mt: isMobile ? 5 : 20, 
-              mb: isMobile ? 8 : 12 
-            }}>
-              <img src="/images/logo.png" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
-              <Typography variant={isMobile ? "h5" : "h4"}>SUPPORTLY</Typography>
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "start",
+          flexGrow: 1,
+          padding: isMobile ? '0 16px' : "20svh 0 40px",
+        }}>
+        {/* Header */}
+        <Header />
+
+        {/* Messages & Search Field */}
+        <Box component="main" sx={{ flexGrow: 1, p: isMobile ? 2 : 3 }}>
+          <Container>
+            <Box sx={{ textAlign: 'center', mb: 4 }}>
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 2,
+                mt: isMobile ? 5 : 20,
+                mb: isMobile ? 8 : 12
+              }}>
+                <img src="/images/logo.png" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
+                <Typography variant={isMobile ? "h5" : "h4"}>SUPPORTLY</Typography>
+              </Box>
             </Box>
-          </Box>
-
-          {/* Messages Component */}
-          <Messages />
-
-          {/* Input Area */}
-          <Box sx={{ display: 'flex', mt: 2 }}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="Type a message..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              sx={{ 
-                borderRadius: 1,
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 4.5,
-                  bgcolor: '#1C1C1C',
-                  '& input': {
-                    color: '#F2F3F4',
+            <MessagesContextProvider>
+              <Messages />
+              <SearchField />
+            </MessagesContextProvider>
+            <Box sx={{ display: 'flex', mt: 2 }}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Type a message..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                sx={{
+                  borderRadius: 1,
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 4.5,
+                    bgcolor: '#F2F3F4',
+                    '& input': {
+                      color: '#1C1C1C',
+                    },
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                   },
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                },
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      color="primary"
-                      onClick={handleSendMessage}
-                      aria-label="Send message"
-                    >
-                      <SendIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-        </Container>
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        color="primary"
+                        onClick={handleSendMessage}
+                        aria-label="Send message"
+                      >
+                        <SendIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+          </Container>
+        </Box>
       </Box>
     </Box>
   );
