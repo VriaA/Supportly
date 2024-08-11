@@ -1,61 +1,69 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useMessage } from "@/hooks/useMessage"; // Update import path if needed
-import { Fragment } from "react";
+import { MessagesContext } from "@/contexts/MessagesContext";
+import { Fragment, useContext } from "react";
+import Loader from "./Loader";
 
 export default function Messages() {
-  const { messages } = useMessage();
+  const { messages } = useContext(MessagesContext);
 
   return (
     <Stack
       direction={"column"}
-      width="100%"  // Adjust to fit the container or use a maxWidth
-      height="55svh"
-      p={2}
+      width="100%"
+      padding="0 200px 100px 200px"
       spacing={2}
-      justifyContent="center"  // Center messages vertically
-      alignItems="center"  // Center messages horizontally
+      justifyContent="center"
+      alignItems="center"
       sx={{
-        overflow: 'hidden',  // Hide overflow to control scroll behavior
-      }}
-    >
+        overflow: "auto",
+      }}>
       <Stack
         direction={"column"}
         spacing={2}
         flexGrow={1}
         overflow="auto"
         sx={{
-          width: '100%',  // Ensure the scroll area takes the full width
-          alignItems: 'left',  // Center align the messages horizontally
-        }}
-      >
-        {messages.map((message, index) => (
-          <Box
-            key={`message-${index + 1}`}
-            display="flex"
-            justifyContent={message.role === "assistant" ? "flex-start" : "flex-end"}
-            sx={{
-              width: '100%',  // Ensure each message takes the full width
-              maxWidth: '90%',  // Adjust this value as needed for your design
-            }}
-          >
+          width: "100%",
+          alignItems: "left",
+        }}>
+        {messages.map((message, index) => {
+          const hasMessage = message.content;
+          return (
             <Box
-              bgcolor={message.role === "assistant" ? "primary.main" : "secondary.main"}
-              color="white"
-              borderRadius="16px"
-              padding="8px 16px"
+              key={`message-${index + 1}`}
+              display="flex"
+              justifyContent={
+                message.role === "assistant" ? "flex-start" : "flex-end"
+              }
               sx={{
-                maxWidth: '100%',  // Ensure messages don’t exceed container width
-              }}
-            >
-              {message.content.split(/\d+\.\s*/).map((sentence, index) => (
-                <Fragment key={`message-${index + 1}`}>
-                  {index !== 0 && <br />}
-                  <Typography>{sentence}</Typography>
-                </Fragment>
-              ))}
+                width: "100%",
+                maxWidth: "90%",
+              }}>
+              <Box
+                bgcolor={
+                  message.role === "assistant"
+                    ? "primary.main"
+                    : "secondary.main"
+                }
+                color="white"
+                borderRadius="16px"
+                padding={message.content ? "8px 16px" : "2px"}
+                sx={{
+                  maxWidth: "100%",
+                }}>
+                {hasMessage &&
+                  message.content.split(/\d+\.\s*/).map((sentence, index) => (
+                    <Fragment key={`message-${index + 1}`}>
+                      {index !== 0 && <br />}
+                      <Typography>{sentence}</Typography>
+                    </Fragment>
+                  ))}
+
+                {!hasMessage && <Loader />}
+              </Box>
             </Box>
-          </Box>
-        ))}
+          );
+        })}
       </Stack>
     </Stack>
   );

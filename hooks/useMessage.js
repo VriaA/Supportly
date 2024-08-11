@@ -1,12 +1,8 @@
-'use client'
+"use client";
 
-import React, { createContext, useState, useContext } from 'react';
+import { useEffect, useState } from "react";
 
-// Create Context
-const MessageContext = createContext();
-
-// Create Provider Component
-export const MessageProvider = ({ children }) => {
+export default function useMessage() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -14,7 +10,8 @@ export const MessageProvider = ({ children }) => {
     },
     {
       role: "assistant",
-      content: "I'm here to help with anxiety, depression, stress management, and more.",
+      content:
+        "I'm here to help with anxiety, depression, stress management, and more.",
     },
     {
       role: "assistant",
@@ -22,6 +19,15 @@ export const MessageProvider = ({ children }) => {
     },
   ]);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    // SCROLL TO THE BOTTOM WHEN A NEW MESSAGE IS ADDED
+    window.scroll({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [messages]);
 
   async function sendMessage() {
     if (!message.trim()) return;
@@ -52,7 +58,9 @@ export const MessageProvider = ({ children }) => {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const text = decoder.decode(value, { stream: true }).replaceAll("**", "");
+        const text = decoder
+          .decode(value, { stream: true })
+          .replaceAll("**", "");
         setMessages((messages) => {
           let lastMessage = messages[messages.length - 1];
           let otherMessages = messages.slice(0, messages.length - 1);
@@ -67,20 +75,12 @@ export const MessageProvider = ({ children }) => {
         ...messages,
         {
           role: "assistant",
-          content: "I'm sorry, but I encountered an error. Please try again later.",
+          content:
+            "I'm sorry, but I encountered an error. Please try again later.",
         },
       ]);
     }
   }
 
-  return (
-    <MessageContext.Provider value={{ messages, setMessages, message, setMessage, sendMessage }}>
-      {children}
-    </MessageContext.Provider>
-  );
-};
-
-// Custom Hook to use MessageContext
-export const useMessage = () => {
-  return useContext(MessageContext);
-};
+  return { messages, setMessages, message, setMessage, sendMessage };
+}
