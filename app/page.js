@@ -154,7 +154,7 @@ export default function Home() {
               justifyContent: 'center', 
               gap: 2, 
               mt: isMobile ? 5 : 20, 
-              mb: isMobile ? 6 : 12 
+              mb: isMobile ? 9 : 12 
             }}>
               <img src="/images/logo.jpg" alt="Supportly Logo" style={{ width: 50, height: 50 }} />
               <Typography variant={isMobile ? "h5" : "h4"}>SUPPORTLY</Typography>
