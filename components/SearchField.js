@@ -38,6 +38,7 @@ export default function SearchField() {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
+                id="send-btn"
                 edge="end"
                 color="primary"
                 onClick={sendMessage}
