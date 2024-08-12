@@ -9,21 +9,20 @@ export default function Messages() {
   return (
     <Stack
       direction={"column"}
-      width="100%"
-      padding="0 200px 100px 200px"
       spacing={2}
-      justifyContent="center"
-      alignItems="center"
       sx={{
         overflow: "auto",
+        padding: {
+          xs: "0 0 40px 0",
+          md: "0 100px 100px 100px",
+          lg: "0 200px 100px 200px",
+        },
       }}>
       <Stack
         direction={"column"}
         spacing={2}
         flexGrow={1}
-        overflow="auto"
         sx={{
-          width: "100%",
           alignItems: "left",
         }}>
         {messages.map((message, index) => {

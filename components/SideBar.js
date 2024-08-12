@@ -21,12 +21,19 @@ import { AppContext } from "@/contexts/AppContext";
 import { auth } from "@/libs/firebase";
 import { signOut } from "firebase/auth";
 
-export default function SideBar({ openDeleteDialog, isDrawerOpen, setDrawerOpen }) {
+export default function SideBar({ openDeleteDialog }) {
   const drawerWidth = 240;
   const { setMessages, setMessage } = useContext(MessagesContext);
-  const { openDialog, setDialog, setLoading, signedInUser } = useContext(AppContext);
+  const {
+    openDialog,
+    setDialog,
+    setLoading,
+    signedInUser,
+    isSidebarOpen,
+    setIsSidebarOpen,
+  } = useContext(AppContext);
 
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isPc = useMediaQuery("(min-width:900px)");
 
   function clearCurrentChats() {
     setMessage("");
@@ -59,9 +66,9 @@ export default function SideBar({ openDeleteDialog, isDrawerOpen, setDrawerOpen 
 
   return (
     <Drawer
-      variant={isMobile ? "temporary" : "permanent"}
-      open={!isMobile || isDrawerOpen}
-      onClose={() => setDrawerOpen(false)}
+      variant={isPc ? "permanent" : "temporary"}
+      onClose={() => setIsSidebarOpen(false)}
+      open={isSidebarOpen}
       sx={{
         width: drawerWidth,
         flexShrink: 0,
@@ -70,10 +77,10 @@ export default function SideBar({ openDeleteDialog, isDrawerOpen, setDrawerOpen 
           boxSizing: "border-box",
           display: "flex",
           flexDirection: "column",
-          bgcolor: '#1C1C1C',
+          bgcolor: "#1C1C1C",
+          borderColor: "#343A40",
         },
-      }}
-    >
+      }}>
       {/* Blue "New Chat" Button */}
       <Box sx={{ p: 2, textAlign: "center" }}>
         <Button
@@ -87,8 +94,7 @@ export default function SideBar({ openDeleteDialog, isDrawerOpen, setDrawerOpen 
             alignItems: "center",
             justifyContent: "center",
             gap: 1,
-          }}
-        >
+          }}>
           <AddIcon />
           New Chat
         </Button>
@@ -97,7 +103,7 @@ export default function SideBar({ openDeleteDialog, isDrawerOpen, setDrawerOpen 
       <Box sx={{ flexGrow: 0.95 }} />
 
       {/* Bottom Section */}
-      <Divider sx={{ backgroundColor: '#343A40' }} />
+      <Divider sx={{ backgroundColor: "#343A40" }} />
       <List>
         <ListItem>
           <Button
@@ -107,9 +113,8 @@ export default function SideBar({ openDeleteDialog, isDrawerOpen, setDrawerOpen 
               textTransform: "capitalize",
               width: "100%",
               textAlign: "start",
-            }}
-          >
-            <ListItemIcon sx={{ color: 'white' }}>
+            }}>
+            <ListItemIcon sx={{ color: "white" }}>
               <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText primary="Sign Out" />
@@ -124,8 +129,7 @@ export default function SideBar({ openDeleteDialog, isDrawerOpen, setDrawerOpen 
               textTransform: "capitalize",
               width: "100%",
               textAlign: "start",
-            }}
-          >
+            }}>
             <ListItemIcon>
               {signedInUser.photoURL ? (
                 <img

@@ -12,9 +12,14 @@ export default function SearchField() {
       sx={{
         position: "fixed",
         right: 0,
-        width: "calc((100%) - 240px)",
+        width: { xs: "100%", md: "calc((100%) - 240px)" },
         bottom: "0",
-        padding: "0 200px 40px 200px",
+        padding: {
+          xs: "0 20px 20px 20px",
+          sm: "0 40px 20px 40px",
+          md: "0 100px 40px 100px",
+          lg: "0 200px 40px 200px",
+        },
         backgroundColor: "#1C1C1C",
       }}>
       <TextField
