@@ -22,7 +22,7 @@ export default function Auth() {
   const confirmPasswordInputRef = useRef(null);
 
   return (
-    <Box className="flex justify-center items-center min-h-[100svh] py-[10svh] md:py-[5svh] bg-[url(../public/images/auth_bg.png)] bg-cover bg-left bg-no-repeat">
+    <Box className="flex justify-center items-center min-h-[100svh] py-[10svh] md:py-[5svh] bg-[url(../public/images/auth_bg.webp)] bg-cover bg-left bg-no-repeat">
       <Box className="flex flex-col items-center justify-center w-[90svw] md:w-1/2 lg:w-2/5 h-full backdrop-blur-md bg-blue-950/20 rounded-xl border border-zinc-50/80">
         <section className="flex flex-col items-center w-full px-10 py-16 md:py-20 md:px-0 md:w-[70%]">
           <h1 className="self-center text-[52px] md:text-6xl lg:text-8xl text-zinc-50 font-semibold !leading-none">
