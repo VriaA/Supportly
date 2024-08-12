@@ -17,6 +17,7 @@ export function AppContextProvider({ children }) {
   const dialogRef = useRef(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -50,6 +51,8 @@ export function AppContextProvider({ children }) {
         setDialog,
         loading,
         setLoading,
+        isSidebarOpen,
+        setIsSidebarOpen,
       }}>
       {children}
       <dialog

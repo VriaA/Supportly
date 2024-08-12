@@ -9,12 +9,13 @@ import {
   ListItemIcon,
   Divider,
   Button,
+  useMediaQuery,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AddIcon from "@mui/icons-material/Add";
-import { MessagesContext } from "@/contexts/MessagesContext";
 import { useContext } from "react";
+import { MessagesContext } from "@/contexts/MessagesContext";
 import welcomMessage from "@/libs/welcomMessage";
 import { AppContext } from "@/contexts/AppContext";
 import { auth } from "@/libs/firebase";
@@ -23,8 +24,16 @@ import { signOut } from "firebase/auth";
 export default function SideBar({ openDeleteDialog }) {
   const drawerWidth = 240;
   const { setMessages, setMessage } = useContext(MessagesContext);
-  const { openDialog, setDialog, setLoading, signedInUser } =
-    useContext(AppContext);
+  const {
+    openDialog,
+    setDialog,
+    setLoading,
+    signedInUser,
+    isSidebarOpen,
+    setIsSidebarOpen,
+  } = useContext(AppContext);
+
+  const isPc = useMediaQuery("(min-width:900px)");
 
   function clearCurrentChats() {
     setMessage("");
@@ -57,17 +66,19 @@ export default function SideBar({ openDeleteDialog }) {
 
   return (
     <Drawer
-      variant="permanent"
+      variant={isPc ? "permanent" : "temporary"}
+      onClose={() => setIsSidebarOpen(false)}
+      open={isSidebarOpen}
       sx={{
         width: drawerWidth,
         flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           boxSizing: "border-box",
           display: "flex",
           flexDirection: "column",
+          bgcolor: "#1C1C1C",
+          borderColor: "#343A40",
         },
       }}>
       {/* Blue "New Chat" Button */}
@@ -92,18 +103,18 @@ export default function SideBar({ openDeleteDialog }) {
       <Box sx={{ flexGrow: 0.95 }} />
 
       {/* Bottom Section */}
-      <Divider />
+      <Divider sx={{ backgroundColor: "#343A40" }} />
       <List>
         <ListItem>
           <Button
             onClick={signUserOut}
             sx={{
-              color: "black",
+              color: "white",
               textTransform: "capitalize",
               width: "100%",
               textAlign: "start",
             }}>
-            <ListItemIcon>
+            <ListItemIcon sx={{ color: "white" }}>
               <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText primary="Sign Out" />
@@ -114,7 +125,7 @@ export default function SideBar({ openDeleteDialog }) {
           <Button
             onClick={openDeleteDialog}
             sx={{
-              color: "black",
+              color: "white",
               textTransform: "capitalize",
               width: "100%",
               textAlign: "start",

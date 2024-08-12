@@ -19,7 +19,7 @@ export default function Home() {
     return (
       <div className="fixed h-fit w-fit inset-0 m-auto flex flex-col items-center gap-3">
         <CircularProgress />
-        <Typography sx={{ fontWeight: 500 }}>
+        <Typography sx={{ fontWeight: 500, color: "#F2F3F4" }}>
           Verifying your authentication...
         </Typography>
       </div>
@@ -35,7 +35,12 @@ export default function Home() {
       }}>
       <MessagesContextProvider>
         {/* Sidebar Drawer */}
-        <SideBar openDeleteDialog={openDeleteDialog} />
+        <SideBar
+          openDeleteDialog={openDeleteDialog}
+          sx={{
+            width: "240px",
+          }}
+        />
 
         {/* Main Content */}
         <Box
@@ -45,13 +50,25 @@ export default function Home() {
             flexDirection: "column",
             justifyContent: "start",
             flexGrow: 1,
-            padding: "20svh 0 40px",
+            padding: {
+              xs: "14svh 20px",
+              sm: "14svh 40px",
+              md: "20svh 0 40px", // Default padding on medium and large screens
+            },
+            bgcolor: "#1C1C1C",
           }}>
           {/* Header */}
           <Header />
 
-          {/* Messages & search field */}
-          <Box component="main">
+          {/* Messages & Search Field */}
+          <Box
+            component="main"
+            sx={{
+              padding: {
+                xs: "0 10px",
+                md: "0 20px",
+              },
+            }}>
             <Messages />
             <SearchField />
           </Box>

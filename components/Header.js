@@ -1,25 +1,50 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { AppContext } from "@/contexts/AppContext";
+import { useContext } from "react";
+
 export default function Header() {
+  const { setIsSidebarOpen } = useContext(AppContext);
+
   return (
     <Box
       component="header"
-      sx={{ textAlign: "center", mb: 4 }}>
+      sx={{
+        position: "fixed",
+        top: 0,
+        right: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: { md: "center" },
+        gap: "12px",
+        padding: { xs: "16px 20px", sm: "16px 40px" },
+        backdropFilter: "blur(16px)",
+        backgroundColor: "#1C1C1C30",
+        width: {
+          xs: "100%",
+          md: "calc((100%) - 240px)",
+        },
+      }}>
+      <Button
+        sx={{ display: { md: "none" } }}
+        onClick={() => setIsSidebarOpen(true)}>
+        <MenuIcon
+          sx={{
+            fontSize: "32px",
+            color: "#F2F3F4",
+          }}
+        />
+      </Button>
       <Box
         component="section"
         sx={{
-          position: "fixed",
-          display: "block",
-          top: 0,
-          right: 0,
-          padding: "16px 0 0 0",
-          backdropFilter: "blur(16px)",
-          width: "calc((100%) - 240px)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: 2,
         }}>
         <svg
+          className="w-8 h-8 [@media(min-width:900px)]:w-12 [@media(min-width:900px)]:h-12"
           width="50"
           height="50"
           viewBox="0 0 586 600"
@@ -38,7 +63,10 @@ export default function Header() {
         </svg>
         <Typography
           variant="h1"
-          fontSize="36px">
+          sx={{
+            fontSize: { xs: "24px", md: "36px" },
+          }}
+          color="#F2F3F4">
           SUPPORTLY
         </Typography>
       </Box>
