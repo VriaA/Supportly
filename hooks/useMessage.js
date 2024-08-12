@@ -1,23 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import welcomMessage from "@/libs/welcomMessage";
 
 export default function useMessage() {
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content: "Hi! I'm Supportly, your mental health support assistant.",
-    },
-    {
-      role: "assistant",
-      content:
-        "I'm here to help with anxiety, depression, stress management, and more.",
-    },
-    {
-      role: "assistant",
-      content: "How can I support you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState(welcomMessage);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -53,7 +40,6 @@ export default function useMessage() {
       }
 
       const { prompt } = await rag_response.json();
-      console.log(prompt);
 
       const response = await fetch("/api/chat", {
         method: "POST",

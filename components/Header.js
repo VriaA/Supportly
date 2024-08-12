@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 export default function Header() {
   return (
     <Box
-      component="Header"
+      component="header"
       sx={{ textAlign: "center", mb: 4 }}>
       <Box
         component="section"

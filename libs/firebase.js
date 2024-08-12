@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: "ai-mental-health-support",
   storageBucket: "ai-mental-health-support.appspot.com",
   messagingSenderId: "1001855380788",
-  appId: "1:1001855380788:web:c43e254093708b69624961"
+  appId: "1:1001855380788:web:c43e254093708b69624961",
 };
 
 const app = initializeApp(firebaseConfig);
