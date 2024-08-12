@@ -32,10 +32,26 @@ export default function Home() {
         display: "flex",
         minHeight: "100svh",
         overflow: "hidden",
-      }}>
+        flexDirection: {
+          xs: "column", // Stack items vertically on small screens
+          md: "row",   // Use a row layout on medium to large screens
+        },
+      }}
+    >
       <MessagesContextProvider>
         {/* Sidebar Drawer */}
-        <SideBar openDeleteDialog={openDeleteDialog} />
+        <SideBar
+          openDeleteDialog={openDeleteDialog}
+          sx={{
+            display: {
+              xs: "none", // Hide sidebar on extra small screens
+              md: "block", // Show sidebar on medium screens and larger
+            },
+            width: {
+              md: "240px", // Set width for the sidebar on larger screens
+            },
+          }}
+        />
 
         {/* Main Content */}
         <Box
@@ -45,13 +61,23 @@ export default function Home() {
             flexDirection: "column",
             justifyContent: "start",
             flexGrow: 1,
-            padding: "20svh 0 40px",
-          }}>
+            padding: {
+              xs: "20px 10px", // Adjust padding on small screens
+              md: "20svh 0 40px", // Default padding on medium and large screens
+            },
+            bgcolor: '#1C1C1C',
+          }}
+        >
           {/* Header */}
           <Header />
 
-          {/* Messages & search field */}
-          <Box component="main">
+          {/* Messages & Search Field */}
+          <Box component="main" sx={{
+            padding: {
+              xs: "0 10px", // Adjust padding for smaller screens
+              md: "0 20px", // Larger padding on medium screens
+            }
+          }}>
             <Messages />
             <SearchField />
           </Box>
@@ -59,10 +85,7 @@ export default function Home() {
       </MessagesContextProvider>
 
       {/* Dialog containing steps for deleting a user's account */}
-      <DeleteDialog
-        isOpen={isDeleteDialogOpen}
-        close={closeDeleteDialog}
-      />
+      <DeleteDialog isOpen={isDeleteDialogOpen} close={closeDeleteDialog} />
     </Box>
   );
 }

@@ -15,7 +15,7 @@ export default function SearchField() {
         width: "calc((100%) - 240px)",
         bottom: "0",
         padding: "0 200px 40px 200px",
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#1C1C1C",
       }}>
       <TextField
         fullWidth
@@ -27,9 +27,9 @@ export default function SearchField() {
           borderRadius: 1,
           "& .MuiOutlinedInput-root": {
             borderRadius: 4.5,
-            bgcolor: "#F2F3F4",
+            bgcolor: "#1C1C1C",
             "& input": {
-              color: "#1C1C1C",
+              color: "#F2F3F4",
             },
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           },

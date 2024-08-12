@@ -9,12 +9,15 @@ import {
   ListItemIcon,
   Divider,
   Button,
+  IconButton,
+  useMediaQuery,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AddIcon from "@mui/icons-material/Add";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useState, useContext } from "react";
 import { MessagesContext } from "@/contexts/MessagesContext";
-import { useContext } from "react";
 import welcomMessage from "@/libs/welcomMessage";
 import { AppContext } from "@/contexts/AppContext";
 import { auth } from "@/libs/firebase";
@@ -25,6 +28,9 @@ export default function SideBar({ openDeleteDialog }) {
   const { setMessages, setMessage } = useContext(MessagesContext);
   const { openDialog, setDialog, setLoading, signedInUser } =
     useContext(AppContext);
+
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   function clearCurrentChats() {
     setMessage("");
@@ -56,85 +62,102 @@ export default function SideBar({ openDeleteDialog }) {
   }
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
-        "& .MuiDrawer-paper": {
+    <>
+      {/* Toggle Button for Mobile */}
+      {isMobile && (
+        <IconButton
+          onClick={() => setDrawerOpen(true)}
+          sx={{ position: 'absolute', top: 16, left: 16 }}
+        >
+          <MenuIcon sx={{ color: 'white' }} />
+        </IconButton>
+      )}
+
+      <Drawer
+        variant={isMobile ? "temporary" : "permanent"}
+        open={!isMobile || isDrawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        sx={{
           width: drawerWidth,
-          boxSizing: "border-box",
-          display: "flex",
-          flexDirection: "column",
-        },
-      }}>
-      {/* Blue "New Chat" Button */}
-      <Box sx={{ p: 2, textAlign: "center" }}>
-        <Button
-          onClick={clearCurrentChats}
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{
-            borderRadius: 2,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 1,
-          }}>
-          <AddIcon />
-          New Chat
-        </Button>
-      </Box>
-
-      <Box sx={{ flexGrow: 0.95 }} />
-
-      {/* Bottom Section */}
-      <Divider />
-      <List>
-        <ListItem>
+            flexDirection: "column",
+            bgcolor: '#1C1C1C'
+          },
+        }}
+      >
+        {/* Blue "New Chat" Button */}
+        <Box sx={{ p: 2, textAlign: "center" }}>
           <Button
-            onClick={signUserOut}
+            onClick={clearCurrentChats}
+            variant="contained"
+            color="primary"
+            fullWidth
             sx={{
-              color: "black",
-              textTransform: "capitalize",
-              width: "100%",
-              textAlign: "start",
-            }}>
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-            <ListItemText primary="Sign Out" />
+              borderRadius: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+            }}
+          >
+            <AddIcon />
+            New Chat
           </Button>
-        </ListItem>
+        </Box>
 
-        <ListItem>
-          <Button
-            onClick={openDeleteDialog}
-            sx={{
-              color: "black",
-              textTransform: "capitalize",
-              width: "100%",
-              textAlign: "start",
-            }}>
-            <ListItemIcon>
-              {signedInUser.photoURL ? (
-                <img
-                  className="w-6 h-6 rounded-full object-center object-cover"
-                  src={signedInUser.photoURL}
-                  alt={signedInUser.displayName || "User"}
-                />
-              ) : (
-                <AccountCircleIcon />
-              )}
-            </ListItemIcon>
+        <Box sx={{ flexGrow: 0.95 }} />
 
-            <ListItemText primary="Delete Account" />
-          </Button>
-        </ListItem>
-      </List>
-    </Drawer>
+        {/* Bottom Section */}
+        <Divider sx={{ backgroundColor: '#343A40' }}/>
+        <List>
+          <ListItem>
+            <Button
+              onClick={signUserOut}
+              sx={{
+                color: "white",
+                textTransform: "capitalize",
+                width: "100%",
+                textAlign: "start",
+              }}
+            >
+              <ListItemIcon sx={{ color: 'white' }}>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sign Out" />
+            </Button>
+          </ListItem>
+
+          <ListItem>
+            <Button
+              onClick={openDeleteDialog}
+              sx={{
+                color: "white",
+                textTransform: "capitalize",
+                width: "100%",
+                textAlign: "start",
+              }}
+            >
+              <ListItemIcon>
+                {signedInUser.photoURL ? (
+                  <img
+                    className="w-6 h-6 rounded-full object-center object-cover"
+                    src={signedInUser.photoURL}
+                    alt={signedInUser.displayName || "User"}
+                  />
+                ) : (
+                  <AccountCircleIcon />
+                )}
+              </ListItemIcon>
+
+              <ListItemText primary="Delete Account" />
+            </Button>
+          </ListItem>
+        </List>
+      </Drawer>
+    </>
   );
 }

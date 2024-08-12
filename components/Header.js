@@ -38,7 +38,8 @@ export default function Header() {
         </svg>
         <Typography
           variant="h1"
-          fontSize="36px">
+          fontSize="36px"
+          color="white">
           SUPPORTLY
         </Typography>
       </Box>
