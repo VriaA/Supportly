@@ -9,7 +9,7 @@ export default function Header() {
         sx={{
           position: "fixed",
           display: "block",
-          top: 0,
+          top: 30,
           right: 0,
           padding: "16px 0 0 0",
           backdropFilter: "blur(16px)",

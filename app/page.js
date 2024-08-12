@@ -2,20 +2,18 @@
 import Messages from "@/components/Messages";
 import { MessagesContextProvider } from "@/contexts/MessagesContext";
 import SearchField from "@/components/SearchField";
-import Header from "@/components/Header";
 import SideBar from "@/components/SideBar";
+import Header from "@/components/Header";
 import { AppContext } from "@/contexts/AppContext";
-import { Box, Typography, CircularProgress, IconButton, useMediaQuery } from "@mui/material";
-import { useContext, useState } from "react";
+import { Box, Typography, CircularProgress } from "@mui/material";
+import { useContext } from "react";
 import DeleteDialog from "@/components/DeleteDialog";
 import useDeleteDialog from "@/hooks/useDeleteDialog";
-import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Home() {
   const { signedInUser } = useContext(AppContext);
-  const { isDeleteDialogOpen, openDeleteDialog, closeDeleteDialog } = useDeleteDialog();
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const { isDeleteDialogOpen, openDeleteDialog, closeDeleteDialog } =
+    useDeleteDialog();
 
   if (!signedInUser) {
     return (
@@ -32,50 +30,54 @@ export default function Home() {
     <Box
       sx={{
         display: "flex",
-        minHeight: "100vh",
-        flexDirection: isMobile ? "column" : "row",
-        alignItems: "center", // Center align items vertically
-        justifyContent: "center", // Center align items horizontally
-        position: "relative", // Needed to properly position the menu icon
-        bgcolor: '#1C1C1C',
+        minHeight: "100svh",
+        overflow: "hidden",
+        flexDirection: {
+          xs: "column", // Stack items vertically on small screens
+          md: "row",   // Use a row layout on medium to large screens
+        },
       }}
     >
       <MessagesContextProvider>
-        {/* Hamburger Menu Icon for Mobile */}
-        {isMobile && (
-          <IconButton
-            onClick={() => setDrawerOpen(true)}
-            sx={{ position: 'absolute', top: 16, left: 16, color: 'white' }}
-          >
-            <MenuIcon />
-          </IconButton>
-        )}
-
         {/* Sidebar Drawer */}
         <SideBar
           openDeleteDialog={openDeleteDialog}
-          isDrawerOpen={isDrawerOpen}
-          setDrawerOpen={setDrawerOpen}
+          sx={{
+            display: {
+              xs: "none", // Hide sidebar on extra small screens
+              md: "block", // Show sidebar on medium screens and larger
+            },
+            width: {
+              md: "240px", // Set width for the sidebar on larger screens
+            },
+          }}
         />
 
         {/* Main Content */}
         <Box
           sx={{
+            position: "relative",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            maxWidth: "600px", // Set a max-width for better readability
-            padding: "20px",
-            boxSizing: "border-box",
+            justifyContent: "start",
+            flexGrow: 1,
+            padding: {
+              xs: "20px 10px", // Adjust padding on small screens
+              md: "20svh 0 40px", // Default padding on medium and large screens
+            },
+            bgcolor: '#1C1C1C',
           }}
         >
           {/* Header */}
           <Header />
 
           {/* Messages & Search Field */}
-          <Box component="main" sx={{ width: "100%" }}>
+          <Box component="main" sx={{
+            padding: {
+              xs: "0 10px", // Adjust padding for smaller screens
+              md: "0 20px", // Larger padding on medium screens
+            }
+          }}>
             <Messages />
             <SearchField />
           </Box>
@@ -83,10 +85,7 @@ export default function Home() {
       </MessagesContextProvider>
 
       {/* Dialog containing steps for deleting a user's account */}
-      <DeleteDialog
-        isOpen={isDeleteDialogOpen}
-        close={closeDeleteDialog}
-      />
+      <DeleteDialog isOpen={isDeleteDialogOpen} close={closeDeleteDialog} />
     </Box>
   );
 }
