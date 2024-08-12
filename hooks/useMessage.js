@@ -18,6 +18,7 @@ export default function useMessage() {
 
   async function sendMessage() {
     if (!message.trim()) return;
+    const sendBtn = document.getElementById("send-btn");
 
     setMessage(""); // Clear the message after it's sent
     setMessages((messages) => [
@@ -27,6 +28,9 @@ export default function useMessage() {
     ]);
 
     try {
+      // Disable the send button when awaiting a response
+      sendBtn.setAttribute("disabled", true);
+
       const rag_response = await fetch("/api/rag", {
         method: "POST",
         headers: {
@@ -80,6 +84,9 @@ export default function useMessage() {
             "I'm sorry, but I encountered an error. Please try again later.",
         },
       ]);
+    } finally {
+      // Enable the send button after
+      sendBtn.removeAttribute("disabled");
     }
   }
 
