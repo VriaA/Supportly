@@ -114,8 +114,8 @@ export default function SideBar({ openDeleteDialog }) {
               width: "100%",
               textAlign: "start",
             }}>
-            <ListItemIcon sx={{ color: "white" }}>
-              <ExitToAppIcon />
+            <ListItemIcon>
+              <ExitToAppIcon sx={{ color: "white" }} />
             </ListItemIcon>
             <ListItemText primary="Sign Out" />
           </Button>
@@ -138,7 +138,7 @@ export default function SideBar({ openDeleteDialog }) {
                   alt={signedInUser.displayName || "User"}
                 />
               ) : (
-                <AccountCircleIcon />
+                <AccountCircleIcon sx={{ color: "white" }} />
               )}
             </ListItemIcon>
 
