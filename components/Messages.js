@@ -36,7 +36,7 @@ export default function Messages() {
               }
               sx={{
                 width: "100%",
-                maxWidth: "90%",
+                maxWidth: { sm: "90%" },
               }}>
               <Box
                 bgcolor={

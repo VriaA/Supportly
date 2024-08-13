@@ -15,7 +15,7 @@ export default function Header() {
         right: 0,
         display: "flex",
         alignItems: "center",
-        justifyContent: { md: "center" },
+        justifyContent: { xs: "space-between", md: "center" },
         gap: "12px",
         padding: { xs: "16px 20px", sm: "16px 40px" },
         backdropFilter: "blur(16px)",
@@ -25,16 +25,6 @@ export default function Header() {
           md: "calc((100%) - 240px)",
         },
       }}>
-      <Button
-        sx={{ display: { md: "none" } }}
-        onClick={() => setIsSidebarOpen(true)}>
-        <MenuIcon
-          sx={{
-            fontSize: "32px",
-            color: "#F2F3F4",
-          }}
-        />
-      </Button>
       <Box
         component="section"
         sx={{
@@ -70,6 +60,16 @@ export default function Header() {
           SUPPORTLY
         </Typography>
       </Box>
+      <Button
+        sx={{ display: { md: "none" } }}
+        onClick={() => setIsSidebarOpen(true)}>
+        <MenuIcon
+          sx={{
+            fontSize: "32px",
+            color: "#F2F3F4",
+          }}
+        />
+      </Button>
     </Box>
   );
 }
