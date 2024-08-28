@@ -76,14 +76,15 @@ export default function useMessage() {
         });
       }
     } catch (error) {
-      setMessages((messages) => [
-        ...messages,
+      // Replaces the empty string with an error message so the loading indicator is removed
+       setMessages((messages) => [
+        ...messages.slice(0, -1),
         {
           role: "assistant",
           content:
             "I'm sorry, but I encountered an error. Please try again later.",
         },
-      ]);
+      ])
     } finally {
       // Enable the send button after
       sendBtn.removeAttribute("disabled");
