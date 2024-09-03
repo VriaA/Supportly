@@ -6,7 +6,7 @@ export async function POST(req) {
   const data = await req.json();
   const completion = await openai.chat.completions.create({
     messages: [{ role: "system", content: systemPrompt }, ...data],
-    model: "gpt-4o-mini",
+    model: "meta-llama/llama-3.1-8b-instruct",
     stream: true,
     max_tokens: 500,
   });
