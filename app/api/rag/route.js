@@ -33,6 +33,7 @@ async function fetchDocuments() {
 
   // Check if the request was successful
   if (!response.ok) {
+    console.log('Docs call failing')
     throw new Error(`Failed to fetch documents: ${response.statusText}`);
   }
 
@@ -66,8 +67,10 @@ export async function POST(req, res) {
   try {
     // Fetch query embeddings
     const queryEmbedding = await fetchEmbeddings(question);
+    console.log('Embeddings fetched')
     // Fetch documents from MongoDB
     const docs = await fetchDocuments();
+    console.log('Docs fetched')
 
     // Calculate similarity scores
     const scores = docs.map((doc) => ({
@@ -83,11 +86,11 @@ export async function POST(req, res) {
 
     // Combine the answers from the top results
     const context = topResults.map((result) => result.answer).join("\n---\n");
-
     const prompt = `Here are 5 answers you can refer to & answer similarly, if relevant: 
         "${context}". 
         Here is the user question:
         "${question}"`;
+    console.log(`prompt given: ${context}`)
     return NextResponse.json({ prompt }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "An error occurred" }, { status: 500 });
