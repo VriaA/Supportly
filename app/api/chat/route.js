@@ -8,7 +8,6 @@ export async function POST(req) {
   try {
     // Parse the request body
     const data = await req.json();
-    console.log('Received request body:', data);
 
     // Fetch chat completion from Groq
     const chatCompletion = await groq.chat.completions.create({
@@ -18,7 +17,6 @@ export async function POST(req) {
 
     // Prepare the response
     const responseContent = chatCompletion.choices[0]?.message?.content || "No content returned";
-    console.log('Chat completion content:', responseContent);
 
     // Return the response as a stream
     const encoder = new TextEncoder();
@@ -36,7 +34,6 @@ export async function POST(req) {
 
     return new NextResponse(stream);
   } catch (error) {
-    console.error('Error in POST /api/chat:', error);
 
     // Return an error response
     const errorResponse = JSON.stringify({
