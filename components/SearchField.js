@@ -22,38 +22,40 @@ export default function SearchField() {
         },
         backgroundColor: "#1C1C1C",
       }}>
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Type a message..."
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        sx={{
-          borderRadius: 1,
-          "& .MuiOutlinedInput-root": {
-            borderRadius: 4.5,
-            bgcolor: "#1C1C1C",
-            "& input": {
-              color: "#F2F3F4",
+      <form onSubmit={sendMessage}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Type a message..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          sx={{
+            borderRadius: 1,
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 4.5,
+              bgcolor: "#1C1C1C",
+              "& input": {
+                color: "#F2F3F4",
+              },
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             },
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          },
-        }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                id="send-btn"
-                edge="end"
-                color="primary"
-                onClick={sendMessage}
-                aria-label="Send message">
-                <SendIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  type="submit"
+                  id="send-btn"
+                  edge="end"
+                  color="primary"
+                  aria-label="Send message">
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </form>
     </Box>
   );
 }
