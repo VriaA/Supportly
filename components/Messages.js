@@ -1,7 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { MessagesContext } from "@/contexts/MessagesContext";
-import { Fragment, useContext } from "react";
+import { useContext } from "react";
 import Loader from "./Loader";
+import Markdown from 'react-markdown'
 
 export default function Messages() {
   const { messages } = useContext(MessagesContext);
@@ -51,12 +52,8 @@ export default function Messages() {
                   maxWidth: "100%",
                 }}>
                 {hasMessage &&
-                  message.content.split(/\d+\.\s*/).map((sentence, index) => (
-                    <Fragment key={`message-${index + 1}`}>
-                      {index !== 0 && <br />}
-                      <Typography>{sentence}</Typography>
-                    </Fragment>
-                  ))}
+                  
+                      <Markdown>{message.content}</Markdown>}
 
                 {!hasMessage && <Loader />}
               </Box>
