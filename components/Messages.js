@@ -1,8 +1,8 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { MessagesContext } from "@/contexts/MessagesContext";
 import { useContext } from "react";
 import Loader from "./Loader";
-import Markdown from 'react-markdown'
+import Markdown from "react-markdown";
 
 export default function Messages() {
   const { messages } = useContext(MessagesContext);
@@ -51,10 +51,7 @@ export default function Messages() {
                 sx={{
                   maxWidth: "100%",
                 }}>
-                {hasMessage &&
-                  
-                      <Markdown>{message.content}</Markdown>}
-
+                {hasMessage && <Markdown>{message.content}</Markdown>}
                 {!hasMessage && <Loader />}
               </Box>
             </Box>

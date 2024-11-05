@@ -64,9 +64,7 @@ export default function useMessage() {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const text = decoder
-          .decode(value, { stream: true })
-          .replaceAll("**", "");
+        const text = decoder.decode(value, { stream: true });
         setMessages((messages) => {
           let lastMessage = messages[messages.length - 1];
           let otherMessages = messages.slice(0, messages.length - 1);
