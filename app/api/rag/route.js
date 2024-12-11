@@ -83,7 +83,6 @@ export async function POST(req, res) {
 
     // Combine the answers from the top results
     const context = topResults.map((result) => result.answer).join("\n---\n");
-
     const prompt = `Here are 5 answers you can refer to & answer similarly, if relevant: 
         "${context}". 
         Here is the user question:
